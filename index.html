@@ -1,92 +1,92 @@
 <!doctype html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>金铭的拼豆吧 Gymin's Beads Bar</title>
-    <link rel="stylesheet" href="./styles.css" />
-  </head>
-  <body>
-    <main class="app">
-      <section class="panel">
-        <h1>金铭的拼豆吧 Gymin's Beads Bar</h1>
-        <p class="hint">上传照片，一键生成 MARD221 标准色号拼豆图纸。</p>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bead Pattern Tool</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="app">
+    <section class="panel">
+      <h1>Bead Pattern Tool</h1>
+      <p class="hint">Upload photo and generate a bead pattern.</p>
 
+      <label class="field">
+        <span>Upload Image</span>
+        <input id="fileInput" type="file" accept="image/*" />
+      </label>
+
+      <div class="field-row">
         <label class="field">
-          <span>上传图片</span>
-          <input id="fileInput" type="file" accept="image/*" />
+          <span>Preset</span>
+          <select id="presetSelect">
+            <option value="beginner">Beginner</option>
+            <option value="advanced" selected>Advanced</option>
+            <option value="pro">Pro</option>
+          </select>
         </label>
+        <label class="field">
+          <span>Grid Width</span>
+          <input id="gridWidth" type="number" min="8" max="256" value="64" />
+        </label>
+        <label class="field">
+          <span>Palette Size</span>
+          <input id="paletteSize" type="number" min="2" max="48" value="16" />
+        </label>
+      </div>
 
-        <div class="field-row">
-          <label class="field">
-            <span>预设</span>
-            <select id="presetSelect">
-              <option value="beginner">新手</option>
-              <option value="advanced" selected>进阶</option>
-              <option value="pro">精细</option>
-            </select>
-          </label>
-          <label class="field">
-            <span>图纸宽度（格）</span>
-            <input id="gridWidth" type="number" min="8" max="256" value="64" />
-          </label>
-          <label class="field">
-            <span>颜色数量</span>
-            <input id="paletteSize" type="number" min="2" max="48" value="16" />
-          </label>
-        </div>
+      <div class="field-row">
+        <label class="field">
+          <span>Merge Threshold (0-100)</span>
+          <input id="mergeThreshold" type="number" min="0" max="100" value="0" />
+        </label>
+        <label class="field">
+          <span>Watermark Opacity (0-100)</span>
+          <input id="watermarkOpacity" type="number" min="0" max="100" value="38" />
+        </label>
+      </div>
 
-        <div class="field-row">
-          <label class="field">
-            <span>颜色合并阈值（0–100）</span>
-            <input id="mergeThreshold" type="number" min="0" max="100" value="0" />
-          </label>
-          <label class="field">
-            <span>水印透明度（0–100）</span>
-            <input id="watermarkOpacity" type="number" min="0" max="100" value="38" />
-          </label>
-        </div>
+      <div class="field-row">
+        <label class="field check-field">
+          <span>Use Dithering</span>
+          <input id="ditherInput" type="checkbox" checked />
+        </label>
+        <label class="field check-field">
+          <span>Show Code in Cell</span>
+          <input id="showCodeInput" type="checkbox" checked />
+        </label>
+      </div>
 
-        <div class="field-row">
-          <label class="field check-field">
-            <span>抖动保真（更像原图）</span>
-            <input id="ditherInput" type="checkbox" checked />
-          </label>
-          <label class="field check-field">
-            <span>格内显示色号</span>
-            <input id="showCodeInput" type="checkbox" checked />
-          </label>
-        </div>
-
-        <section class="pay-card">
-          <h2>立即下单（收款码）</h2>
-          <p class="pay-note">普通版 9.9 元/张，精细版 19.9 元/张。付款后请把截图和原图发给我。</p>
-          <div class="pay-qr-grid">
-            <figure class="pay-qr-item">
-              <img src="./wechat-pay.jpg" alt="微信收款码" />
-              <figcaption>微信支付</figcaption>
-            </figure>
-            <figure class="pay-qr-item">
-              <img src="./alipay-pay.jpg" alt="支付宝收款码" />
-              <figcaption>支付宝</figcaption>
-            </figure>
-          </div>
-        </section>
-
-        <div class="actions">
-          <button id="generateBtn" type="button" class="btn-primary">生成图纸</button>
-          <button id="downloadBtn" type="button" class="btn-secondary" disabled>导出 PNG</button>
-          <button id="exportAllBtn" type="button" class="btn-ghost" disabled>导出 PNG+CSV</button>
+      <section class="pay-card">
+        <h2>Order Now</h2>
+        <p class="pay-note">Standard: 9.9 / Pro: 19.9. Send payment screenshot + photo after payment.</p>
+        <div class="pay-qr-grid">
+          <figure class="pay-qr-item">
+            <img src="./wechat-pay.jpg" alt="WeChat QR" />
+            <figcaption>WeChat</figcaption>
+          </figure>
+          <figure class="pay-qr-item">
+            <img src="./alipay-pay.jpg" alt="Alipay QR" />
+            <figcaption>Alipay</figcaption>
+          </figure>
         </div>
       </section>
 
-      <section class="canvas-panel">
-        <canvas id="patternCanvas" width="640" height="640"></canvas>
-        <div id="legend" class="legend"></div>
-      </section>
-    </main>
+      <div class="actions">
+        <button id="generateBtn" type="button" class="btn-primary">Generate</button>
+        <button id="downloadBtn" type="button" class="btn-secondary" disabled>Export PNG</button>
+        <button id="exportAllBtn" type="button" class="btn-ghost" disabled>Export PNG+CSV</button>
+      </div>
+    </section>
 
-    <script src="./mard221-palette.js"></script>
-    <script src="./script.js"></script>
-  </body>
+    <section class="canvas-panel">
+      <canvas id="patternCanvas" width="640" height="640"></canvas>
+      <div id="legend" class="legend"></div>
+    </section>
+  </main>
+
+  <script src="./mard221-palette.js"></script>
+  <script src="./script.js"></script>
+</body>
 </html>
